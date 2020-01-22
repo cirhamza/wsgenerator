@@ -1,0 +1,12 @@
+[{
+    "name": "Ender 3",    
+    "electronicVersion": 3,
+    "manufacturer": 0,
+    "model": 1,
+
+    "bed": {
+        "x": 220,
+        "y": 220,
+        "z": 250
+    }
+}]

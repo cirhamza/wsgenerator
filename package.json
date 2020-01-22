@@ -1,0 +1,20 @@
+{
+  "name": "ws-generator",
+  "version": "0.1.0",
+  "description": "A project that generates ws files given an stl file ",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "npm-scripts": "^1.4.0",
+    "three": "^0.112.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "test",
+    "start": "node index.js"
+  },
+  "author": "Hamza Taha",
+  "license": "ISC"
+}
