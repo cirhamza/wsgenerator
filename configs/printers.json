@@ -1,12 +1,15 @@
-[{
-    "name": "Ender 3",    
-    "electronicVersion": 3,
-    "manufacturer": 0,
-    "model": 1,
+[
+    {
+        "name": "CR10",
+                
+        "electronicVersion": 3,
+        "manufacturer": 0,
+        "model": 1,
 
-    "bed": {
-        "x": 220,
-        "y": 220,
-        "z": 250
+        "bed": {
+            "x": 300,
+            "y": 300,
+            "z": 400
+        }
     }
-}]
+]
