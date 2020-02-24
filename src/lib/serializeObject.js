@@ -1,8 +1,11 @@
-var generateWorkspaceFile = require('../lib/generateWorkspaceFile');
-var getPrinterConfigs = require('../tools/getPrinterConfigs');
+var generateWorkspaceFile = require("../lib/generateWorkspaceFile");
+var getPrinterConfigs = require("../tools/getPrinterConfigs");
 
-module.exports = function serializeObject(object, filename) {
-
+module.exports = function serializeObject(
+	object,
+	filename,
+	modifierOptions = null
+) {
 	//Create a copy of the currently opened object and apply all transformations to it
 	var serializedobject = object.clone();
 	serializedobject.geometry = object.geometry.clone();
@@ -17,15 +20,17 @@ module.exports = function serializeObject(object, filename) {
 	serializedobject.scale.set(1, 1, 1);
 	serializedobject.updateMatrix();
 
-    
-    //Prepare inputs
-    var printerConfigs = getPrinterConfigs();
-    
+	//Prepare inputs
+	var printerConfigs = getPrinterConfigs();
+
 	var pointList = serializedobject.geometry.attributes.position.array;
 
-	var rvwj = generateWorkspaceFile(printerConfigs, filename, pointList);
-	
+	var rvwj = generateWorkspaceFile(
+		printerConfigs,
+		filename,
+		pointList,
+		modifierOptions
+	);
+
 	return rvwj;
-}
-
-
+};

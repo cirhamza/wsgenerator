@@ -1,7 +1,11 @@
-﻿var THREE = require('three');
+﻿var THREE = require("three");
 
-module.exports = function generateWorkspaceFile(printer, fileName, pointArray){
-
+module.exports = function generateWorkspaceFile(
+	printer,
+	fileName,
+	pointArray,
+	modifierOptions = null
+) {
 	//Recreate geometry from point array
 	var geometry = {
 		vertices: [],
@@ -9,7 +13,6 @@ module.exports = function generateWorkspaceFile(printer, fileName, pointArray){
 	};
 
 	if (pointArray && pointArray !== undefined) {
-
 		for (let i = 0; i < pointArray.length / 3; i++) {
 			const j = i * 3;
 			geometry.vertices.push(
@@ -46,7 +49,7 @@ module.exports = function generateWorkspaceFile(printer, fileName, pointArray){
 	};
 
 	//Add new model
-	serializeContainer.Models.push(new Model(fileName));
+	serializeContainer.Models.push(new Model(fileName, modifierOptions));
 
 	//ModelPositions
 	for (let j = 0; j < geometry.vertices.length; j++) {
@@ -70,17 +73,37 @@ module.exports = function generateWorkspaceFile(printer, fileName, pointArray){
 	const rvwj = JSON.stringify(serializeContainer);
 
 	return rvwj;
-}
+};
 
 //Constructor for Model object
-var Model = function(fileName) {
+var Model = function(fileName, modifierOptions = null) {
 	this.metaData = {
 		IsGroup: false,
 		Path: "",
 		Name: fileName,
 		PrintingMaterial: 0,
-		Watertight: "PerformCheck"
+		Watertight: "PerformCheck",
+		SlicingPriority: 0
 	};
+
+	// If this model is a modifer, add the modifier
+	if (modifierOptions) {
+		if (
+			modifierOptions.SlicingPriority &&
+			modifierOptions.SlicingPriority > 0 &&
+			modifierOptions.Modifier
+		) {
+			this.metaData.SlicingPriority = modifierOptions.SlicingPriority;
+			this.metaData.Modifier = {
+				FillDensityFactor: modifierOptions.Modifier.FillDensityFactor
+			};
+		} else {
+			throw new Error(
+				"Modifier details missing or has incorrect values."
+			);
+		}
+	}
+
 	this.position = { X: 0, Y: 0, Z: 0 };
 	this.scale = { X: 1, Y: 1, Z: 1 };
 	this.rotationX = 0;

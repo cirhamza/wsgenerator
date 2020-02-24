@@ -1,20 +1,27 @@
-const fs = require('fs');
-const path = require('path');
+const fs = require("fs");
+const path = require("path");
 
-const { WS_FILES_FOLDER } = require("../../const");
+const {
+	WS_FILES_FOLDER,
+	STLS_FOLDER,
+	STL_CONFIGS
+} = require("../../configs/const");
 
-function getStlFilesList(stlFilesPath) {
-	return fs.readdirSync(stlFilesPath, function(err, files) {
-		if (err) {
-			throw new Error("Error fetching list of files: " + err);
-		}
-	});
-};
+function getStlFilesList(useModifiers) {
+	if (useModifiers) {
+		return require(STL_CONFIGS);
+	} else {
+		return fs.readdirSync(STLS_FOLDER, function(err, files) {
+			if (err) {
+				throw new Error("Error fetching list of files: " + err);
+			}
+		});
+	}
+}
 
 function saveSlicingTaskReqBody(filename, data) {
-
 	const fullWsFilePath = path.join(WS_FILES_FOLDER, filename);
-	
+
 	return fs.writeFile(fullWsFilePath, data, function() {
 		console.log(
 			"File [ " +
@@ -24,7 +31,7 @@ function saveSlicingTaskReqBody(filename, data) {
 				" ]"
 		);
 	});
-};
+}
 
 module.exports = {
 	getStlFilesList,

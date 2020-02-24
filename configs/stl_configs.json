@@ -1,0 +1,14 @@
+[
+    {
+        "filename":"calicat.stl"
+    },
+    {
+        "filename": "20mm_cube.stl",
+        "options":{
+            "SlicingPriority": 2,
+            "Modifier":{
+                "FillDensityFactor": 0.5
+            }
+        }
+    }
+]
